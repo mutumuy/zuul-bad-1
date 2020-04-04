@@ -34,23 +34,29 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room Mercado, BaseCT, Plaza, Oscuro, Medio, Foso, Terraza, BaseT;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        Mercado = new Room("en un gran mercado");
+        BaseCT = new Room("en el lugar de salida de los sanos");
+        Plaza = new Room("en una plaza");
+        Oscuro = new Room("en una callejuela entre los edificios");
+        Medio = new Room("en la calle principal de la ciudad");
+        Foso = new Room("en la rampa de acceso a un garaje");
+        Terraza = new Room(" en la terraza de un bar");
+        BaseT = new Room("en el lugar de salida de los infectados");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        Mercado.setExits(null, BaseCT, Oscuro, null);
+        BaseCT.setExits(null, Plaza, null, Mercado);
+        Plaza.setExits(null, null, Foso, BaseCT);
+        Oscuro.setExits(Mercado, Medio, Terraza, null);
+        Medio.setExits(null, Foso, BaseT, Oscuro);
+        Foso.setExits(Plaza, null, null, Medio);
+        Terraza.setExits(Oscuro, BaseT, null, null);
+        BaseT.setExits(Medio, null, null, Terraza);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = BaseT;  // start game outside
     }
 
     /**
@@ -68,7 +74,7 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Gracias por jugar.  Good bye.");
     }
 
     /**
@@ -77,11 +83,11 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Bienvenido a The World of Zuul!");
+        System.out.println("World of Zuul es un nuevo juego de aventuras increiblemente aburrido.");
+        System.out.println("Escribe 'help' si necesitas ayuda.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
+        System.out.println("Tu estas " + currentRoom.getDescription());
         System.out.print("Exits: ");
         if(currentRoom.northExit != null) {
             System.out.print("north ");
@@ -108,7 +114,7 @@ public class Game
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
-            System.out.println("I don't know what you mean...");
+            System.out.println("No se que me quieres decir...");
             return false;
         }
 
