@@ -47,14 +47,14 @@ public class Game
         BaseT = new Room("en el lugar de salida de los infectados");
         
         // initialise room exits
-        Mercado.setExits(null, BaseCT, Oscuro, null);
-        BaseCT.setExits(null, Plaza, null, Mercado);
-        Plaza.setExits(null, null, Foso, BaseCT);
-        Oscuro.setExits(Mercado, Medio, Terraza, null);
-        Medio.setExits(null, Foso, BaseT, Oscuro);
-        Foso.setExits(Plaza, null, null, Medio);
-        Terraza.setExits(Oscuro, BaseT, null, null);
-        BaseT.setExits(Medio, null, null, Terraza);
+        Mercado.setExits(null, BaseCT, Oscuro, null, null);
+        BaseCT.setExits(null, Plaza, null, Mercado, Foso);
+        Plaza.setExits(null, null, Foso, BaseCT, null);
+        Oscuro.setExits(Mercado, Medio, Terraza, null, null);
+        Medio.setExits(null, Foso, BaseT, Oscuro, null);
+        Foso.setExits(Plaza, null, null, Medio, null);
+        Terraza.setExits(Oscuro, BaseT, null, null, null);
+        BaseT.setExits(Medio, null, null, Terraza, null);
 
         currentRoom = BaseT;  // start game outside
     }
@@ -162,6 +162,9 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+        if(direction.equals("southEast")) {
+            nextRoom = currentRoom.southEastExit;
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -202,6 +205,9 @@ public class Game
          }
          if(currentRoom.westExit != null) {
              System.out.print("west ");
+         }
+         if(currentRoom.southEastExit != null) {
+             System.out.print("southEast ");
          }
          System.out.println();
     }
