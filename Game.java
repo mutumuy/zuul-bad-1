@@ -49,6 +49,7 @@ public class Game
         // initialise room exits
         Mercado.setExit("east", BaseCT);
         Mercado.setExit("south", Oscuro);
+        Mercado.setExit("pasadizo", Plaza);
         
         BaseCT.setExit("east", Plaza);
         BaseCT.setExit("west", Mercado);
@@ -56,6 +57,7 @@ public class Game
         
         Plaza.setExit("south", Foso);
         Plaza.setExit("west", BaseCT);
+        Plaza.setExit("pasadizo", Mercado);
         
         Oscuro.setExit("north", Mercado);
         Oscuro.setExit("east", Medio);
