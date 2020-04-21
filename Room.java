@@ -22,6 +22,7 @@
  */
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class Room 
 {
@@ -55,25 +56,7 @@ public class Room
       * @return La sala ubicada en la direccion especificada o null si no hay ninguna salida en esa direccion
       */
     public Room getExit(String salida){
-        Room roomToReturn = null;
-        
-        if(salida.equals("north")){
-            roomToReturn = exits.get("north");
-        }
-        if(salida.equals("south")){
-            roomToReturn = exits.get("south");
-        }
-        if(salida.equals("east")){
-            roomToReturn = exits.get("east");
-        }
-        if(salida.equals("west")){
-            roomToReturn = exits.get("west");
-        }
-        if(salida.equals("southEast")){
-            roomToReturn = exits.get("southEast");
-        }
-        
-        return roomToReturn;
+        return exits.get(salida);
     }
     
     /**
@@ -83,21 +66,7 @@ public class Room
       * @param sala La sala que se encuentra en la direccion indicada
       */
     public void setExit(String direccion, Room sala){
-        if(direccion.equals("north")){
-            exits.put("north", sala);
-        }
-        if(direccion.equals("east")){
-             exits.put("east", sala);
-        }
-        if(direccion.equals("south")){
-            exits.put("south", sala);
-        }
-        if(direccion.equals("west")){
-            exits.put("west", sala);
-        }
-        if(direccion.equals("southEast")){
-            exits.put("southEast", sala); 
-        }
+        exits.put(direccion, sala);
     }
     
     /**
@@ -108,24 +77,11 @@ public class Room
       * @return Una descripción de las salidas existentes.
       */
     public String getExitString(){
-        String exitsDescription = "Salidas: ";
-        
-        if(exits.get("north") != null){
-            exitsDescription += "north ";
+        Set<String> direcciones = exits.keySet();
+        String descripcion = "Salidas: ";
+        for(String direccion: direcciones){
+            descripcion += direccion + " ";
         }
-        if(exits.get("south") != null){
-            exitsDescription += "south ";
-        }
-        if(exits.get("east") != null){
-            exitsDescription += "east ";
-        }
-        if(exits.get("west") != null){
-            exitsDescription += "west ";
-        }
-        if(exits.get("southEast") != null){
-            exitsDescription += "southEast ";
-        }
-        
-        return exitsDescription;
+        return descripcion;
     }
 }
