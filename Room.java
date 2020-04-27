@@ -28,17 +28,19 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
-
+    private Item objeto;
+    
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, Item objeto) 
     {
         this.description = description;
         exits = new HashMap<>();
+        this.objeto = objeto;
     }
 
     /**
@@ -93,6 +95,14 @@ public class Room
       * @return Una descripcion completa de la habitacion incluyendo sus salidas
       */
     public String getLongDescription(){
-        return "Tu estas " + description + ".\n" + getExitString();
+        String texto = "Estas en " + description + "\n";
+        if(objeto != null){
+            texto += "En esta habitacion hay " + objeto.toString() + "\n" + getExitString();
+        }
+        else{
+            texto += "En esta habitacion no hay nada. \n" + getExitString();
+        }
+        return texto;
     }
+    
 }
