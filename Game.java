@@ -15,10 +15,14 @@
  * @version 2011.07.31
  */
 
+import java.util.ArrayList;
+
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
+    private ArrayList<Room> habitacionesAnteriores;
+    private int vecesEjecutadoBack;
         
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +31,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        habitacionesAnteriores = new ArrayList<>();
+        vecesEjecutadoBack = 0;
     }
 
     /**
@@ -136,6 +142,7 @@ public class Game
         }
         else if (commandWord.equals("go")) {
             goRoom(command);
+            vecesEjecutadoBack = 0;
         }
         else if(commandWord.equals("look")){
             look();
@@ -145,6 +152,14 @@ public class Game
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
+        }
+        else if (commandWord.equals("back")) {  
+            if(vecesEjecutadoBack < 2) {
+                vecesEjecutadoBack ++;
+                backRoom();
+            } else {
+                System.out.println("Numero de retrocesos excedido");
+            }
         }
 
         return wantToQuit;
@@ -187,8 +202,10 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            Room previousRoom = currentRoom;
+            habitacionesAnteriores.add(previousRoom);
             currentRoom = nextRoom;
-            printLocationInfo();
+            printLocationInfo();            
         }
     }
 
@@ -214,6 +231,16 @@ public class Game
     
     private void eat() {
         System.out.println("You have eaten now and you are not hungry any more");
+    }
+    
+    private void backRoom() {
+        if(habitacionesAnteriores.size() > 0) {
+            currentRoom = habitacionesAnteriores.get(habitacionesAnteriores.size() - 1);
+            habitacionesAnteriores.remove(habitacionesAnteriores.size() - 1);
+            printLocationInfo();
+        } else {
+            System.out.println("No puedes retroceder mas");
+        }
     }
     
     public void printLocationInfo(){

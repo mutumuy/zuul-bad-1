@@ -98,9 +98,9 @@ public class Room
     public String getLongDescription(){
         String texto = "Estas en " + description + "\n";
         if(objetos.isEmpty()) {
-            texto = "La sala no contiene ningun objeto";
+            texto += "La sala no contiene ningun objeto";
         } else {
-            texto = "En la sala hay los siguintes objetos: \n";
+            texto += "En la sala hay los siguintes objetos: \n";
             for(Item itemActual : objetos) {
                 texto += itemActual.getDescripcion() + "con un peso de " + itemActual.getPeso() + " gramos" + "\n";
             }
