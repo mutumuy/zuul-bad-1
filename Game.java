@@ -16,13 +16,13 @@
  */
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-    private ArrayList<Room> habitacionesAnteriores;
-    private int vecesEjecutadoBack;
+    private Stack<Room> habitacionesRecorridas;
         
     /**
      * Create the game and initialise its internal map.
@@ -31,8 +31,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        habitacionesAnteriores = new ArrayList<>();
-        vecesEjecutadoBack = 0;
+        habitacionesRecorridas = new Stack<Room>();
     }
 
     /**
@@ -142,7 +141,6 @@ public class Game
         }
         else if (commandWord.equals("go")) {
             goRoom(command);
-            vecesEjecutadoBack = 0;
         }
         else if(commandWord.equals("look")){
             look();
@@ -154,12 +152,7 @@ public class Game
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("back")) {  
-            if(vecesEjecutadoBack < 2) {
-                vecesEjecutadoBack ++;
-                backRoom();
-            } else {
-                System.out.println("Numero de retrocesos excedido");
-            }
+            backRoom();
         }
 
         return wantToQuit;
@@ -203,7 +196,7 @@ public class Game
         }
         else {
             Room previousRoom = currentRoom;
-            habitacionesAnteriores.add(previousRoom);
+            habitacionesRecorridas.push(previousRoom);
             currentRoom = nextRoom;
             printLocationInfo();            
         }
@@ -234,11 +227,11 @@ public class Game
     }
     
     private void backRoom() {
-        if(habitacionesAnteriores.size() > 0) {
-            currentRoom = habitacionesAnteriores.get(habitacionesAnteriores.size() - 1);
-            habitacionesAnteriores.remove(habitacionesAnteriores.size() - 1);
+        if(!habitacionesRecorridas.empty()) {
+            currentRoom = habitacionesRecorridas.pop();
             printLocationInfo();
-        } else {
+        }
+        else {
             System.out.println("No puedes retroceder mas");
         }
     }
