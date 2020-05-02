@@ -36,26 +36,28 @@ public class Game
     {
         Room Mercado, BaseCT, Plaza, Oscuro, Medio, Foso, Terraza, BaseT;
         
-        Item cuchilloCarnicero = new Item("un cuchillo de carnicero ", 1200);
-        Item cuchilloOxido = new Item("un cuchillo oxidado ", 800);
+
         // create the rooms
-        Mercado = new Room("en un gran mercado",null);
-        BaseCT = new Room("en el lugar de salida de los sanos", cuchilloOxido);
-        Plaza = new Room("en una plaza",null);
-        Oscuro = new Room("en una callejuela entre los edificios",null);
-        Medio = new Room("en la calle principal de la ciudad",null);
-        Foso = new Room("en la rampa de acceso a un garaje",null);
-        Terraza = new Room(" en la terraza de un bar",null);
-        BaseT = new Room("en el lugar de salida de los infectados", cuchilloCarnicero);
+        Mercado = new Room("en un gran mercado");
+        BaseCT = new Room("en el lugar de salida de los sanos");
+        Plaza = new Room("en una plaza");
+        Oscuro = new Room("en una callejuela entre los edificios");
+        Medio = new Room("en la calle principal de la ciudad");
+        Foso = new Room("en la rampa de acceso a un garaje");
+        Terraza = new Room(" en la terraza de un bar");
+        BaseT = new Room("en el lugar de salida de los infectados");
         
         // initialise room exits
         Mercado.setExit("east", BaseCT);
         Mercado.setExit("south", Oscuro);
         Mercado.setExit("pasadizo", Plaza);
+        Mercado.addItem("un paraguas ", 1200);
         
         BaseCT.setExit("east", Plaza);
         BaseCT.setExit("west", Mercado);
         BaseCT.setExit("southEast", Foso);
+        BaseCT.addItem("un cuchillo oxidado ", 800);
+        BaseCT.addItem("una botella de agua ", 1000);
         
         Plaza.setExit("south", Foso);
         Plaza.setExit("west", BaseCT);
@@ -71,12 +73,14 @@ public class Game
         
         Foso.setExit("north", Plaza);
         Foso.setExit("west", Medio);
+        Foso.addItem("una botella ", 1000);
         
         Terraza.setExit("north", Oscuro);
         Terraza.setExit("east", BaseT);
         
         BaseT.setExit("north", Medio);
         BaseT.setExit("west", Terraza);
+        BaseT.addItem("un cuchillo oxidado ", 800);
 
         currentRoom = BaseT;  // start game outside
     }

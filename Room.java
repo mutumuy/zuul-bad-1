@@ -23,12 +23,13 @@
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.ArrayList;
 
 public class Room 
 {
     private String description;
     private HashMap<String, Room> exits;
-    private Item objeto;
+    private ArrayList<Item> objetos;
     
     /**
      * Create a room described "description". Initially, it has
@@ -36,11 +37,11 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, Item objeto) 
+    public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<>();
-        this.objeto = objeto;
+        objetos = new ArrayList<>();
     }
 
     /**
@@ -96,13 +97,19 @@ public class Room
       */
     public String getLongDescription(){
         String texto = "Estas en " + description + "\n";
-        if(objeto != null){
-            texto += "En esta habitacion hay " + objeto.toString() + "\n" + getExitString();
-        }
-        else{
-            texto += "En esta habitacion no hay nada. \n" + getExitString();
-        }
+        if(objetos.isEmpty()) {
+            texto = "La sala no contiene ningun objeto";
+        } else {
+            texto = "En la sala hay los siguintes objetos: \n";
+            for(Item itemActual : objetos) {
+                texto += itemActual.getDescripcion() + "con un peso de " + itemActual.getPeso() + " gramos" + "\n";
+            }
+        }   
         return texto;
     }
     
+    public void addItem(String descripcion , int peso) {
+        Item objetoAAgregar = new Item (descripcion , peso);
+        objetos.add(objetoAAgregar);
+    }
 }
