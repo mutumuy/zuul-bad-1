@@ -103,6 +103,35 @@ public class Player {
             System.out.println("No llevas ningun objeto");
         }
     }
+    
+        public void drop(Command command){
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Drop what?");
+            return;
+        }
+        else{
+            int contador = 0;
+            boolean encontrado = false;
+            while(!encontrado && contador < objetos.size()){
+                if(objetos.get(contador).getDescripcion().contains(command.getSecondWord())){
+                    encontrado = true;
+                    contador --;
+                }
+                contador ++;
+            }
+            if(!encontrado){
+                System.out.println("No tienes ese objeto en el inventario");
+                System.out.println();
+            }
+            else{
+                System.out.println("Has soltado " + objetos.get(contador).toString());
+                System.out.println();
+                currentRoom.addItem(objetos.get(contador).getId(), objetos.get(contador).getDescripcion(), objetos.get(contador).getPeso(), objetos.get(contador).getEquipable());
+                objetos.remove(contador);
+            }
+        }
+    }
 
     /**
      * Inprime por pantalla la informacion completa de la sala
