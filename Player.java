@@ -1,17 +1,21 @@
 import java.util.Stack;
+import java.util.ArrayList;
 
 /**
  * Clase que representa al jugador, en ella se guardara toda la informacion
  * referente al jugador.
  */
 public class Player {
-
+    private ArrayList<Item> objetos;
     private Room currentRoom;
     private Stack<Room> previousRoom;
+    private int pesoMaximo = 1500;
+    private int pesoDisponible = pesoMaximo;
 
     public Player() {
         currentRoom = null;
         previousRoom = new Stack<>();
+        objetos = new ArrayList<>();
     }
 
     public void setCurrentRoom(Room sala) {
@@ -64,6 +68,75 @@ public class Player {
      */
     public void eat() {
         System.out.println("You have eaten now and you are not hungry any more");
+    }
+    
+    public void take(Command command) {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know the item to take...
+            System.out.println("No has indicado el ID del arma");
+            return;
+        }
+        String positionItem = command.getSecondWord();
+        Item itemToTake = currentRoom.getItem(positionItem);
+
+        if (itemToTake != null && itemToTake.getPeso() < pesoDisponible){
+            System.out.println("Has cogido " + "\n");
+            System.out.println(itemToTake.getDescripcion() + "con un peso de " + itemToTake.getPeso()+ " gramos");
+            objetos.add(itemToTake);
+            pesoDisponible -= itemToTake.getPeso();
+            currentRoom.removeItem(itemToTake);
+        }
+
+        else{
+            if (itemToTake == null){
+                System.out.println("No hay objetos en la habitacion");
+            }
+            else{
+                System.out.println("No puedes llevar un objeto tan pesado");
+            }
+        }
+    }
+    
+    public void items(){
+        if (objetos.size() > 0){
+            System.out.println("Llevas: ");
+            for (int i = 0; i < objetos.size(); i++){
+                System.out.println(objetos.get(i).getDescripcion() + "con un peso de " + objetos.get(i).getPeso()+ " gramos");
+            }
+        }
+        else{
+            System.out.println("No llevas ningun objeto");
+        }
+    }
+    
+        public void drop(Command command){
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Drop what?");
+            return;
+        }
+        else{
+            int contador = 0;
+            boolean encontrado = false;
+            while(!encontrado && contador < objetos.size()){
+                if(objetos.get(contador).getDescripcion().contains(command.getSecondWord())){
+                    encontrado = true;
+                    contador --;
+                }
+                contador ++;
+            }
+            if(!encontrado){
+                System.out.println("No tienes ese objeto en el inventario");
+                System.out.println();
+            }
+            else{
+                System.out.println("Has soltado " + objetos.get(contador).toString());
+                System.out.println();
+                currentRoom.addItem(objetos.get(contador).getId(), objetos.get(contador).getDescripcion(), objetos.get(contador).getPeso(), objetos.get(contador).getEquipable());
+                pesoDisponible += objetos.get(contador).getPeso();
+                objetos.remove(contador);
+            }
+        }
     }
 
     /**
