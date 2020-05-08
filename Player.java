@@ -9,6 +9,8 @@ public class Player {
     private ArrayList<Item> objetos;
     private Room currentRoom;
     private Stack<Room> previousRoom;
+    private int pesoMaximo = 1500;
+    private int pesoDisponible = pesoMaximo;
 
     public Player() {
         currentRoom = null;
@@ -68,8 +70,7 @@ public class Player {
         System.out.println("You have eaten now and you are not hungry any more");
     }
     
-        public void take(Command command) 
-    {
+    public void take(Command command) {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know the item to take...
             System.out.println("No has indicado el ID del arma");
@@ -78,16 +79,20 @@ public class Player {
         String positionItem = command.getSecondWord();
         Item itemToTake = currentRoom.getItem(positionItem);
 
-        if (itemToTake != null){
+        if (itemToTake != null && itemToTake.getPeso() < pesoDisponible){
             System.out.println("Has cogido " + "\n");
             System.out.println(itemToTake.getDescripcion() + "con un peso de " + itemToTake.getPeso()+ " gramos");
             objetos.add(itemToTake);
+            pesoDisponible -= itemToTake.getPeso();
             currentRoom.removeItem(itemToTake);
         }
 
         else{
             if (itemToTake == null){
                 System.out.println("No hay objetos en la habitacion");
+            }
+            else{
+                System.out.println("No puedes llevar un objeto tan pesado");
             }
         }
     }
@@ -128,6 +133,7 @@ public class Player {
                 System.out.println("Has soltado " + objetos.get(contador).toString());
                 System.out.println();
                 currentRoom.addItem(objetos.get(contador).getId(), objetos.get(contador).getDescripcion(), objetos.get(contador).getPeso(), objetos.get(contador).getEquipable());
+                pesoDisponible += objetos.get(contador).getPeso();
                 objetos.remove(contador);
             }
         }
