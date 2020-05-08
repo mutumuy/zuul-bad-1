@@ -55,13 +55,13 @@ public class Game
         Mercado.setExit("east", BaseCT);
         Mercado.setExit("south", Oscuro);
         Mercado.setExit("pasadizo", Plaza);
-        Mercado.addItem("un paraguas ", 1200);
+        Mercado.addItem("paraguas", "un paraguas ", 1200);
         
         BaseCT.setExit("east", Plaza);
         BaseCT.setExit("west", Mercado);
         BaseCT.setExit("southEast", Foso);
-        BaseCT.addItem("un cuchillo oxidado ", 800);
-        BaseCT.addItem("una botella de agua ", 1000);
+        BaseCT.addItem("cuchillo", "un cuchillo oxidado ", 800);
+        BaseCT.addItem("agua", "una botella de agua ", 1000);
         
         Plaza.setExit("south", Foso);
         Plaza.setExit("west", BaseCT);
@@ -77,14 +77,14 @@ public class Game
         
         Foso.setExit("north", Plaza);
         Foso.setExit("west", Medio);
-        Foso.addItem("una botella ", 1000);
+        Foso.addItem("botella", "una botella ", 1000);
         
         Terraza.setExit("north", Oscuro);
         Terraza.setExit("east", BaseT);
         
         BaseT.setExit("north", Medio);
         BaseT.setExit("west", Terraza);
-        BaseT.addItem("un cuchillo oxidado ", 800);
+        BaseT.addItem("cuchillo", "un cuchillo oxidado ", 800);
 
         player.setCurrentRoom(BaseT);  // start game outside
     }
@@ -153,6 +153,9 @@ public class Game
         else if (commandWord.equals("back")) {  
             player.backRoom();
         }
+        else if (commandWord.equals("take")) {  
+            player.take(command);
+        }
 
         return wantToQuit;
     }
@@ -192,10 +195,5 @@ public class Game
     private void eat() {
         System.out.println("You have eaten now and you are not hungry any more");
     }
-        
-    public void printLocationInfo(){
-         System.out.println();
-         System.out.println();
-    }
-    
+            
 }

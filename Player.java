@@ -1,17 +1,19 @@
 import java.util.Stack;
+import java.util.ArrayList;
 
 /**
  * Clase que representa al jugador, en ella se guardara toda la informacion
  * referente al jugador.
  */
 public class Player {
-
+    private ArrayList<Item> objetos;
     private Room currentRoom;
     private Stack<Room> previousRoom;
 
     public Player() {
         currentRoom = null;
         previousRoom = new Stack<>();
+        objetos = new ArrayList<>();
     }
 
     public void setCurrentRoom(Room sala) {
@@ -64,6 +66,32 @@ public class Player {
      */
     public void eat() {
         System.out.println("You have eaten now and you are not hungry any more");
+    }
+    
+        public void take(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know the item to take...
+            System.out.println("No has indicado el ID del arma");
+            return;
+        }
+        String positionItem = command.getSecondWord();
+        Item itemToTake = currentRoom.getItem(positionItem);
+
+        if (itemToTake != null){
+            System.out.println("Has cogido " + "\n");
+            System.out.println(itemToTake.getDescripcion() + "con un peso de " + itemToTake.getPeso()+ " gramos");
+            currentRoom.removeItem(itemToTake);
+        }
+
+        else{
+            if (itemToTake == null){
+                System.out.println("No hay armas en la habitacion");
+            }
+            else{
+                System.out.println("Te has pasado del peso de la mochila");
+            }
+        }
     }
 
     /**
