@@ -113,7 +113,7 @@ public class Room
         int position = 0;
         Item itemToReturn = null;
         while (buscando && objetos.size() > position){
-            if (objetos.get(position).getId().equals(id)){
+            if (objetos.get(position).getId().equals(id) && objetos.get(position).getEquipable()){
                 itemToReturn = objetos.get(position);
                 buscando = false;
             }
@@ -126,8 +126,8 @@ public class Room
         objetos.remove(item);
     }
     
-    public void addItem(String id, String descripcion , int peso) {
-        Item objetoAAgregar = new Item (id, descripcion , peso);
+    public void addItem(String id, String descripcion , int peso, boolean equipable) {
+        Item objetoAAgregar = new Item (id, descripcion , peso, equipable);
         objetos.add(objetoAAgregar);
     }
 }

@@ -86,10 +86,7 @@ public class Player {
 
         else{
             if (itemToTake == null){
-                System.out.println("No hay armas en la habitacion");
-            }
-            else{
-                System.out.println("Te has pasado del peso de la mochila");
+                System.out.println("No hay objetos en la habitacion");
             }
         }
     }

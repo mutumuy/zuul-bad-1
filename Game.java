@@ -55,13 +55,13 @@ public class Game
         Mercado.setExit("east", BaseCT);
         Mercado.setExit("south", Oscuro);
         Mercado.setExit("pasadizo", Plaza);
-        Mercado.addItem("paraguas", "un paraguas ", 1200);
+        Mercado.addItem("paraguas", "un paraguas ", 1200, true);
         
         BaseCT.setExit("east", Plaza);
         BaseCT.setExit("west", Mercado);
         BaseCT.setExit("southEast", Foso);
-        BaseCT.addItem("cuchillo", "un cuchillo oxidado ", 800);
-        BaseCT.addItem("agua", "una botella de agua ", 1000);
+        BaseCT.addItem("cuchillo", "un cuchillo oxidado ", 800, true);
+        BaseCT.addItem("agua", "una botella de agua ", 1000, false);
         
         Plaza.setExit("south", Foso);
         Plaza.setExit("west", BaseCT);
@@ -77,14 +77,14 @@ public class Game
         
         Foso.setExit("north", Plaza);
         Foso.setExit("west", Medio);
-        Foso.addItem("botella", "una botella ", 1000);
+        Foso.addItem("botella", "una botella ", 1000, true);
         
         Terraza.setExit("north", Oscuro);
         Terraza.setExit("east", BaseT);
         
         BaseT.setExit("north", Medio);
         BaseT.setExit("west", Terraza);
-        BaseT.addItem("cuchillo", "un cuchillo oxidado ", 800);
+        BaseT.addItem("cuchillo", "un cuchillo oxidado ", 800, false);
 
         player.setCurrentRoom(BaseT);  // start game outside
     }
