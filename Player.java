@@ -81,6 +81,7 @@ public class Player {
         if (itemToTake != null){
             System.out.println("Has cogido " + "\n");
             System.out.println(itemToTake.getDescripcion() + "con un peso de " + itemToTake.getPeso()+ " gramos");
+            objetos.add(itemToTake);
             currentRoom.removeItem(itemToTake);
         }
 
@@ -88,6 +89,18 @@ public class Player {
             if (itemToTake == null){
                 System.out.println("No hay objetos en la habitacion");
             }
+        }
+    }
+    
+    public void items(){
+        if (objetos.size() > 0){
+            System.out.println("Llevas: ");
+            for (int i = 0; i < objetos.size(); i++){
+                System.out.println(objetos.get(i).getDescripcion() + "con un peso de " + objetos.get(i).getPeso()+ " gramos");
+            }
+        }
+        else{
+            System.out.println("No llevas ningun objeto");
         }
     }
 
